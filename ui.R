@@ -38,6 +38,10 @@ body <- dashboardBody(
     tabItem(tabName = "Accidentetlégislation",
       h2("Widgets tab content"),
       fluidRow(
+          box(selectInput("var",
+                  label = "Choix d'une année",
+                  choices = year,
+                  selected = "2000"),),
           box(leafletOutput("mymap1")),
       ),
     )

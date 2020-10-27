@@ -1,4 +1,5 @@
 library(gapminder)
+library(dplyr)
 
 youth <- read.table("data/youth_cont.csv" , header = TRUE , sep = ',')
 jeunes_morts <- read.table("data/jeunes_morts_cont.csv" , header = TRUE , sep = ',')
@@ -13,4 +14,6 @@ mapped_data <- joinCountryData2Map(data_clear3[1:32,],joinCode="ISO3",nameJoinCo
 
 europe <- data_clear3[(data_clear3$Continent=="EU"),]
 
-mapped_data_europe <- joinCountryData2Map(europe[(europe$Year==2000),],joinCode="ISO3",nameJoinColumn = "COUNTRY")
+EuropeYear<-function(df,YearSelect){ return(joinCountryData2Map(df[(df$Year==YearSelect),],joinCode="ISO3",nameJoinColumn = "COUNTRY"))}
+
+year <- unique(europe$Year)

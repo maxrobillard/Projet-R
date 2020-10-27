@@ -19,4 +19,7 @@ mapCountryData(mapped_data,nameColumnToPlot = "Value",numCats=100,mapRegion="eur
 europe <- data_clear3[(data_clear3$Continent=="EU"),]
 mapped_data_europe <- joinCountryData2Map(europe[(europe$Year==2000),],joinCode="ISO3",nameJoinColumn = "COUNTRY")
 mapCountryData(mapped_data_europe,nameColumnToPlot = "Value",numCats=100,mapRegion="europe",catMethod = "categorical",colourPalette = viridis(31),oceanCol = "white")
+data <- switch("2000","2000"=mapped_data_europe,"2001"=mapped_data_europe1)
+df <- reactive({europe[(europe$Year==2000)]})
+year <- unique(europe$Year)
 

@@ -11,13 +11,6 @@ library(leaflet)
 
 source("global.R")
 
-bins <- c(20, 100, 500,1000,1500, 2000,2500,4000,5000,6000,7000,8000,9000,10000)
-pal <- colorBin("Reds", domain = mapped_data_europe, bins = bins)
-
-labels <- sprintf(
-  "<strong>%s</strong><br/>Nbr de mort: %g ",
-  mapped_data_europe$Country, mapped_data_europe$Value
-) %>% lapply(htmltools::HTML)
 
 function(input, output) {
 
@@ -43,10 +36,19 @@ function(input, output) {
                               })
 
   output$mymap1 <- renderLeaflet({
+                                    df <- EuropeYear(data_clear3,input$var)
+                                    bins <- c(20, 100, 500,1000,1500, 2000,2500,4000,5000,6000,7000,7500,8000,9000,10000,11000,20000,40000,45000)
+                                    pal <- colorBin("Reds", domain = df, bins = bins)
+                                    labels <- sprintf(
+                                      "<strong>%s</strong><br/>Nbr de mort: %g ",
+                                      df$Country, df$Value
+                                    ) %>%
+                                    lapply(htmltools::HTML)
+
                                     leaflet()%>%
                                     addTiles()%>%
                                     setView(17.23,56.31, zoom = 3)%>%
-                                    addPolygons(data=mapped_data_europe,fillColor= ~pal(Value),
+                                    addPolygons(data=df,fillColor= ~pal(Value),
                                     weight = 2,
                                     opacity = 1,
                                     color = "white",
@@ -64,7 +66,7 @@ function(input, output) {
                                         textsize = "15px",
                                         direction = "auto")
                                   )%>%
-                                  addLegend("bottomright",pal=pal,values=mapped_data_europe$Value,title="Nombre de mort",opacity=1)
+                                  addLegend("bottomright",pal=pal,values=df$Value,title="Nombre de mort",opacity = 1)
                                   })
 
 
