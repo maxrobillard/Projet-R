@@ -22,4 +22,4 @@ mapCountryData(mapped_data_europe,nameColumnToPlot = "Value",numCats=100,mapRegi
 data <- switch("2000","2000"=mapped_data_europe,"2001"=mapped_data_europe1)
 df <- reactive({europe[(europe$Year==2000)]})
 year <- unique(europe$Year)
-
+Continent <- unique(data_clear3$Continent)

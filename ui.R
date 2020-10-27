@@ -38,11 +38,27 @@ body <- dashboardBody(
     tabItem(tabName = "Accidentetlégislation",
       h2("Widgets tab content"),
       fluidRow(
-          box(selectInput("var",
+          box(
+            sliderInput("var",
                   label = "Choix d'une année",
-                  choices = year,
-                  selected = "2000"),),
-          box(leafletOutput("mymap1")),
+                  min = year[1],
+                  max = year[length(year)],
+                  value = year[1],
+                  step=1,
+                  animate = TRUE,
+                  sep=" "
+
+                  ),
+              selectInput("Continent",
+                      label = "Choix d'un continent",
+                      choices = Continent,
+                      selected = "NA"),),
+          box(
+            title = "Visualisation du nombre de morts par accident de voiture",
+            status = "warning",
+            solidHeader = TRUE,
+            leafletOutput("mymap1")
+            ),
       ),
     )
   )

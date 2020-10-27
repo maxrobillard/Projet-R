@@ -11,7 +11,6 @@ library(leaflet)
 
 source("global.R")
 
-
 function(input, output) {
 
 
@@ -36,8 +35,9 @@ function(input, output) {
                               })
 
   output$mymap1 <- renderLeaflet({
-                                    df <- EuropeYear(data_clear3,input$var)
-                                    bins <- c(20, 100, 500,1000,1500, 2000,2500,4000,5000,6000,7000,7500,8000,9000,10000,11000,20000,40000,45000)
+                                    df <- DataYear(data_clear3,input$var)
+                                    bins <- c(100, 500,1000,1500, 2000,2500,4000,5000,6000,7000,7500,8000,9000,10000,11000,20000,40000,45000)
+                                    views <- ContinentFrancais(input$Continent)
                                     pal <- colorBin("Reds", domain = df, bins = bins)
                                     labels <- sprintf(
                                       "<strong>%s</strong><br/>Nbr de mort: %g ",
@@ -47,7 +47,7 @@ function(input, output) {
 
                                     leaflet()%>%
                                     addTiles()%>%
-                                    setView(17.23,56.31, zoom = 3)%>%
+                                    setView(as.numeric(views[3]),as.numeric(views[2]), zoom = 3)%>%
                                     addPolygons(data=df,fillColor= ~pal(Value),
                                     weight = 2,
                                     opacity = 1,
@@ -66,7 +66,7 @@ function(input, output) {
                                         textsize = "15px",
                                         direction = "auto")
                                   )%>%
-                                  addLegend("bottomright",pal=pal,values=df$Value,title="Nombre de mort",opacity = 1)
+                                  addLegend("bottomright",pal=pal,values=df$Value,title=paste("Nombre de mort en <br>",views[1],"en ",input$var),opacity = 1)
                                   })
 
 
