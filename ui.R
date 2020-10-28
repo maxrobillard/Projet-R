@@ -132,5 +132,5 @@ dashboardPage(
   dashboardHeader(title = "Visualisation"),
   sidebar,
   body,
-  skin = "red"
+  skin = "yellow"
 )
