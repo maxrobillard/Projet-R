@@ -173,4 +173,23 @@ output$AlcoolTotalMap <- renderLeaflet({
                                  })
 
 
+    output$pays_hist <- renderUI({
+                                df <- data_clear3[(data_clear3$Continent==input$continent2),]
+                                choix <- unique(df$Country)
+                                selectInput("pays_hist",
+                                            label = "Choix du pays",
+                                            choices = choix
+                                            )
+                                })
+
+   output$HistAlcool <- renderPlot({
+                                df <- youthMeanContinent
+                                t <- switch(input$DataAlcool,
+                                            "BothSexes" = geom_bar(aes(x = Continent , y = BothSexes, fill = BothSexes),position="dodge",stat = 'identity'),
+                                            "Male" = geom_bar(aes(x = Continent , y = Male, fill = Male),position="dodge",stat = 'identity'),
+                                            "Female" = geom_bar(aes(x = Continent , y = Female, fill = Female),position="dodge",stat = 'identity')
+                                            )
+                                ggplot(df) + t
+                                })
+
 }

@@ -33,3 +33,7 @@ names(youth)[names(youth)=="X15.19.years.old..current.females.drinkers...."]<-"F
 names(youth)[names(youth)=="Alpha.3.code"]<-"code"
 YouthClear <- select(youth,-c(X,Unnamed..0))
 AlcoolMap <- joinCountryData2Map(YouthClear,joincode="ISO3",namedJoinColumn="code")
+
+youthMeanContinent <- aggregate(YouthClear,by=list(YouthClear$Continent),FUN=mean)
+youthMeanContinent <- select(youthMeanContinent,-c(Country,code,Continent,Year))
+names(youthMeanContinent)[names(youthMeanContinent)=="Group.1"]<-"Continent"

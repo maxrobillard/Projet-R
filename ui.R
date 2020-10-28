@@ -51,6 +51,15 @@ body <- dashboardBody(
                     selected = "Tout le monde")
           )
         ),
+        fluidRow(
+                box(width=12,
+                  selectInput("DataAlcool",
+                          label = "Choix des données",
+                          choices = c("Tout le monde" = "BothSexes","Hommes" = "Male","Femmes"="Female"),
+                          selected = "Tout le monde"),
+                  plotOutput("HistAlcool")
+                )
+        ),
       ),
   #-------------- Deuxième   page ------------#
 
@@ -85,12 +94,16 @@ body <- dashboardBody(
 
         column(width=6,
           box(width =12,
+              status = "warning",
               height =heightBoxes,
-            selectInput("pays_hist",
-                      label = "Choix du pays",
-                      choices = pays,
-                      selected = "France")
+              selectInput("continent2",
+                          label = "Choix d'un continent",
+                          choices = Continent1,
+                          selected = 'EU'
               ),
+            uiOutput("pays_hist")
+
+          ),
           box(
               width = 12,
               title = "Visualisation du nombre de morts par accident de voiture",

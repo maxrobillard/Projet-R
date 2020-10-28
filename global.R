@@ -8,6 +8,16 @@ names(youth)[names(youth)=="X15.19.years.old..current.females.drinkers...."]<-"F
 names(youth)[names(youth)=="Alpha.3.code"]<-"code"
 YouthClear <- select(youth,-c(X,Unnamed..0))
 AlcoolMap <- joinCountryData2Map(YouthClear,joinCode="ISO3",nameJoinColumn="code")
+youthMeanContinent <- aggregate(YouthClear,by=list(YouthClear$Continent),FUN=mean)
+youthMeanContinent <- select(youthMeanContinent,-c(Country,code,Continent,Year))
+names(youthMeanContinent)[names(youthMeanContinent)=="Group.1"]<-"Continent"
+youthMeanContinent[1,1]<-"Amerique du nord"
+youthMeanContinent[2,1]<-"Afrique"
+youthMeanContinent[3,1]<-"Asie"
+youthMeanContinent[4,1]<-"Europe"
+youthMeanContinent[5,1]<-"Oceanie"
+youthMeanContinent[6,1]<-"Amerique du sud"
+
 
 jeunes_morts <- read.table("data/jeunes_morts_cont.csv" , header = TRUE , sep = ',')
 valeur_max <- aggregate(jeunes_morts,by=list(jeunes_morts$Country,jeunes_morts$Year),FUN=max)
@@ -31,6 +41,7 @@ DataYear<-function(df,YearSelect){ return(joinCountryData2Map(df[(df$Year==YearS
 
 pays <- unique(jeunes_morts$Country)
 year <- unique(europe$Year)
+Continent1 <- unique(data_clear3$Continent)
 Continent <- c(unique(data_clear3$Continent),"NA")
 ContinentFrancais<- function(list){
                         if(list=="NA"){
