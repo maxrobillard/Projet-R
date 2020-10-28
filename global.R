@@ -1,15 +1,26 @@
 library(gapminder)
 library(dplyr)
 
-youth <- read.table("data/youth_cont.csv" , header = TRUE , sep = ',')
-jeunes_morts <- read.table("data/jeunes_morts_cont.csv" , header = TRUE , sep = ',')
-tolerance <- read.table("data/tolerance_compl.csv",header = TRUE, sep=',')
+youth <- read.csv("data/youth_cont.csv" , header = TRUE , sep = ',')
+names(youth)[names(youth)=="X15.19.years.old..current.drinkers.both.sexes...."]<-"BothSexes"
+names(youth)[names(youth)=="X15.19.years.old..current.males.drinkers...."]<-"Male"
+names(youth)[names(youth)=="X15.19.years.old..current.females.drinkers...."]<-"Female"
+names(youth)[names(youth)=="Alpha.3.code"]<-"code"
+YouthClear <- select(youth,-c(X,Unnamed..0))
+AlcoolMap <- joinCountryData2Map(YouthClear,joinCode="ISO3",nameJoinColumn="code")
 
+jeunes_morts <- read.table("data/jeunes_morts_cont.csv" , header = TRUE , sep = ',')
 valeur_max <- aggregate(jeunes_morts,by=list(jeunes_morts$Country,jeunes_morts$Year),FUN=max)
 data_clear <- valeur_max
 data_clear <- select(data_clear,-c(X,Unnamed..0_x,Data.type,Unnamed..0_y))
 data_clear2 <- data_clear[!(data_clear$Country=="Iceland"),]
 data_clear3 <- select(data_clear2,-c(Group.1,Group.2))
+
+tolerance <- read.csv("data/tolerance_compl.csv")
+names(tolerance)[names(tolerance)=="Legal.blood.alcohol.concentration..BAC..limits.for.young.novice.drivers"] <- "tolerance"
+names(tolerance)[names(tolerance)=="Alpha.3.code"]<-"code"
+toleranceMap <- joinCountryData2Map(tolerance,joinCode="ISO3",nameJoinColumn="code")
+
 
 mapped_data <- joinCountryData2Map(data_clear3[1:32,],joinCode="ISO3",nameJoinColumn = "COUNTRY")
 
@@ -18,6 +29,7 @@ europe <- data_clear3[(data_clear3$Continent=="EU"),]
 
 DataYear<-function(df,YearSelect){ return(joinCountryData2Map(df[(df$Year==YearSelect),],joinCode="ISO3",nameJoinColumn = "COUNTRY"))}
 
+pays <- unique(jeunes_morts$Country)
 year <- unique(europe$Year)
 Continent <- c(unique(data_clear3$Continent),"NA")
 ContinentFrancais<- function(list){
