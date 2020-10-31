@@ -13,11 +13,12 @@ library(leaflet)
 source("global.R")
 
 heightBoxes <- 300
+heightBoxesMap <- 600
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Alcool", tabName = "Alcool", icon = icon("dashboard")),
-    menuItem("Accident et législation", icon = icon("th"), tabName = "Accidentetlégislation")
+    menuItem("Alcool", tabName = "Alcool", icon = icon("cocktail")),
+    menuItem("Accident et législation", icon = icon("car-crash"), tabName = "Accidentetlégislation")
   )
 )
 
@@ -26,7 +27,7 @@ body <- dashboardBody(
     tabItem(tabName = "Alcool",
       h2("Visualisation sur la consommation d'alcool"),
         fluidRow(
-          box(
+          box(height = heightBoxesMap,
             title = "Visualisation du pourcentage d'habitant consommant de l'alcool ",
             status = "warning",
             solidHeader = TRUE,
@@ -40,7 +41,7 @@ body <- dashboardBody(
                     choices = c("Tout le monde" = "BothSexes","Hommes" = "Male","Femmes"="Female"),
                     selected = "Tout le monde")
           ),
-          box(
+          box(height = heightBoxesMap,
             title = "Visualisation du pourcentage d'habitant consommant de l'alcool vue mondiale",
             status = "warning",
             solidHeader = TRUE,
@@ -53,6 +54,7 @@ body <- dashboardBody(
         ),
         fluidRow(
                 box(width=12,
+                  status = "warning",
                   selectInput("DataAlcool",
                           label = "Choix des données",
                           choices = c("Tout le monde" = "BothSexes","Hommes" = "Male","Femmes"="Female"),
@@ -69,6 +71,7 @@ body <- dashboardBody(
         column(width=6,
             box(width=12,
                 height =heightBoxes,
+                status = "warning",
               sliderInput("var",
                     label = "Choix d'une année",
                     min = year[1],
@@ -127,7 +130,7 @@ body <- dashboardBody(
 
 )
 
-# Put them together into a dashboardPage
+# CRéation du dashboard 
 dashboardPage(
   dashboardHeader(title = "Visualisation"),
   sidebar,

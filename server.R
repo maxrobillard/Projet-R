@@ -14,7 +14,7 @@ source("global.R")
 function(input, output) {
 
 
-  #Create the mymap
+  #Creation d'une carte avec des données
 output$AlcoolTotalMap <- renderLeaflet({
                                     df <- AlcoolMap
                                     bins <- c(0,10,20,30,40,50,60,70,80,90,100)
@@ -54,7 +54,7 @@ output$AlcoolTotalMap <- renderLeaflet({
 
                                  })
 
-
+#Creation d'une carte avec des données
  output$AlcoolTotalMap1 <- renderLeaflet({
                                      df <- AlcoolMap
                                      bins <- c(0,10,20,30,40,50,60,70,80,90,100)
@@ -95,7 +95,7 @@ output$AlcoolTotalMap <- renderLeaflet({
 
 
 
-
+ #Creation d'une carte avec des données
   output$mymap1 <- renderLeaflet({
                                     df <- DataYear(data_clear3,input$var)
                                     bins <- c(100, 500,1000,1500, 2000,2500,4000,5000,6000,7000,7500,8000,9000,10000,11000,20000,40000,45000)
@@ -130,7 +130,7 @@ output$AlcoolTotalMap <- renderLeaflet({
                                   )%>%
                                   addLegend("bottomright",pal=pal,values=df$Value,title=paste("Nombre de mort en <br>",views[1],"en ",input$var),opacity = 1)
                                   })
-
+  #Creation d'une carte avec des données
   output$tolerancemap <- renderLeaflet({
                                     df <- toleranceMap
                                     bins <- c(0,0.01, 0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1)
@@ -166,13 +166,13 @@ output$AlcoolTotalMap <- renderLeaflet({
                                   addLegend("bottomright",pal=pal,values=df$tolerance,title=paste("Tolerance d'Alcool en <br>",views[1]),opacity = 1)
                                   })
 
-
+    #Création d'un histogramme pour afficher les jeunes morts
     output$hist_pays <- renderPlot({
                                  df <- data_clear3[(data_clear3$Country == input$pays_hist),]
                                  ggplot(df) + geom_histogram(aes(x = Year , y = Value) , stat = 'identity')
                                  })
 
-
+   # Création d'un menu déroulant qui prend en choix les pays disponibles
     output$pays_hist <- renderUI({
                                 df <- data_clear3[(data_clear3$Continent==input$continent2),]
                                 choix <- unique(df$Country)
@@ -182,6 +182,7 @@ output$AlcoolTotalMap <- renderLeaflet({
                                             )
                                 })
 
+   # création d'un histogramme qui affiche selon le choix d'un menu déroulant la consommation moyenne d'alcool par continents 
    output$HistAlcool <- renderPlot({
                                 df <- youthMeanContinent
                                 t <- switch(input$DataAlcool,
