@@ -86,8 +86,8 @@ Nous pouvons donc nous avancer à dire qu'il n'existe pas de corrélation factue
 
 
 # Lien vers les datasets
-Base de données "youth" : https://apps.who.int/gho/data/node.main.A1206?lang=en
-Base de données "tolerance" : https://apps.who.int/gho/data/node.main.A1209?lang=en
+Base de données "youth" : https://apps.who.int/gho/data/node.main.A1206?lang=en <br>
+Base de données "tolerance" : https://apps.who.int/gho/data/node.main.A1209?lang=en <br>
 Le préprocessing des bases de données est dans le dossier nettoyage_bdd.
 
 
